@@ -1,0 +1,185 @@
+/*Обнуление*/
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-family: "Nunito", sans-serif;
+}
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+:focus,
+:active {
+  outline: none;
+}
+a:focus,
+a:active {
+  outline: none;
+}
+nav,
+footer,
+header,
+aside {
+  display: block;
+}
+
+html,
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(
+    25deg,
+    rgba(66, 230, 149, 1),
+    rgba(66, 32, 149, 1)
+  );
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-size: 100%;
+  line-height: 1;
+  font-size: 10px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+body {
+  font-size: 1.6rem;
+  color: var(--text-dark, #282727);
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+input::-ms-clear {
+  display: none;
+}
+button {
+  cursor: pointer;
+}
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+a,
+a:visited {
+  text-decoration: none;
+  color: #403f3d;
+  cursor: pointer;
+}
+a:hover {
+  text-decoration: none;
+}
+ul li {
+  list-style: none;
+}
+img {
+  vertical-align: top;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 10px;
+  font-weight: 400;
+}
+/*----------------*/
+
+header,
+main,
+footer {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+main {
+  flex-grow: 1;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  gap: 10%;
+  flex-shrink: 0;
+  min-width: 100%;
+  height: 10%;
+  color: #e4e4e5;
+  align-items: center;
+  padding: 5px 10px;
+  flex: 0 0 auto;
+  background: rgba(66, 32, 149, 1);
+}
+
+footer a {
+  display: block;
+  width: 5%;
+}
+
+footer svg {
+  width: 10%;
+}
+
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1em;
+}
+
+.card {
+  width: 5em;
+  height: 5em;
+  perspective: 50em;
+  cursor: pointer;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s;
+}
+
+.card-front,
+.card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(72, 121, 37);
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0.05em 0.05em 0.05em 0.05em rgba(0, 0, 0, 0.1);
+}
+
+.card.visible .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
