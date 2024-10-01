@@ -8,7 +8,7 @@ const CARD_FLIP_TIMEOUT_MS = 500;
 const CARD_ELEMENTS = ["🍇", "🍒", "🥭", "🍍", "🍉", "🥝"];
 
 const CARD_AMOUNT = 12;
-const VISIBLE_CARDS = [];
+let VISIBLE_CARDS = [];
 
 START_GAME_BTN.addEventListener("click", startGame);
 
@@ -64,15 +64,38 @@ function renderCard(emoji) {
   GAME_NODE.appendChild(card);
 }
 
-function handleCardClick() {}
+function handleCardClick(card) {
+  if (card.classList.contains(VISIBLE_CARD_CLASSNAME)) {
+    return;
+  }
+
+  const checkVictory = () => {
+    const visibleCardNode = document.querySelectorAll(
+      `.${VISIBLE_CARD_CLASSNAME}`
+    );
+    if (visibleCardNode.length === CARD_AMOUNT) {
+      VICTORY_TEXT.textContent = "Вы выйграли!";
+    }
+  };
+
+  card.classList.add(VISIBLE_CARD_CLASSNAME);
+  VISIBLE_CARDS.push(card);
+  card
+    .querySelector(".card-inner")
+    .addEventListener("transitionend", checkVictory);
+  if (VISIBLE_CARDS.length % 2 !== 0) {
+    return;
+  }
+
+  const [prelastCard, lastCard] = VISIBLE_CARDS.slice(-2);
+  if (prelastCard.textContent !== lastCard.textContent) {
+    VISIBLE_CARDS = VISIBLE_CARDS.slice(0, VISIBLE_CARDS.length - 2);
+
+    setTimeout(() => {
+      lastCard.classList.remove(VISIBLE_CARD_CLASSNAME);
+      prelastCard.classList.remove(VISIBLE_CARD_CLASSNAME);
+    }, CARD_FLIP_TIMEOUT_MS);
+  }
+}
 
 startGame();
-
-{
-  /* <div class="card visible">
-  <div class="card-inner">
-    <div class="card-front">Лицевая</div>
-    <div class="card-back">Задняя</div>
-  </div>
-</div>; */
-}
