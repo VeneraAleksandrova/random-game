@@ -1,7 +1,7 @@
 const GAME_NODE = document.querySelector("#game-board");
 const VICTORY_TEXT = document.querySelector("#victory-message");
 const START_GAME_BTN = document.querySelector("#new-game-btn");
-
+const steps = document.querySelector(".steps");
 const VISIBLE_CARD_CLASSNAME = "visible";
 
 const CARD_FLIP_TIMEOUT_MS = 500;
@@ -9,10 +9,12 @@ const CARD_ELEMENTS = ["🍇", "🍒", "🥭", "🍍", "🍉", "🥝"];
 
 const CARD_AMOUNT = 12;
 let VISIBLE_CARDS = [];
+let step = 0;
 
 START_GAME_BTN.addEventListener("click", startGame);
 
 function startGame() {
+  checkSteps(true);
   [GAME_NODE, VICTORY_TEXT].forEach((element) => (element.textContent = ""));
   const CARD_VALUES = generateArray(CARD_ELEMENTS, CARD_AMOUNT);
   console.log(CARD_VALUES);
@@ -64,11 +66,19 @@ function renderCard(emoji) {
   GAME_NODE.appendChild(card);
 }
 
+function checkSteps(newGame = false) {
+  if (!newGame) {
+    step++;
+  } else {
+    step = 0;
+  }
+  steps.textContent = step;
+}
 function handleCardClick(card) {
   if (card.classList.contains(VISIBLE_CARD_CLASSNAME)) {
     return;
   }
-
+  checkSteps();
   const checkVictory = () => {
     const visibleCardNode = document.querySelectorAll(
       `.${VISIBLE_CARD_CLASSNAME}`
