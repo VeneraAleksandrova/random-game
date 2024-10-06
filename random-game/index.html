@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+    rel="stylesheet"
+  />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fascinate+Inline&family=Pacifico&family=Playwrite+CU:wght@100..400&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
     <title>Memory-game</title>
@@ -10,27 +18,38 @@
 <body>
     <header>
         <h1>Memory-game</h1>
-        <h3>Угадай все карточки</h3>
+        <h2>Открой все карточки</h2>
     </header>
     <main>
+
         <h3>Steps: <span class="steps">0</span></h3>
         <div id="game-board">
 
 
         </div>
         <h2 id = "victory-message"></h2>
-        <button id="new-game-btn">Новая игра</button>
+        <div class="buttons-block">   
+            
+            <button id="results-of-game">Результаты</button>
+            <button id="new-game-btn">Новая игра</button>
+        
+        </div>
 
+		<div class="modal-overlay hide">
+            <div class="modal-wrapper">
+
+            </div>
+		</div>
     </main>
     <footer>
 		<a href="https://github.com/VeneraAleksandrova"  target="_blank" >
             
-			<img src="github.svg" alt="github">
+			<img class="footer-img" src="github.svg" alt="github">
 	  </a>
 		  <p>2024</p>
 		  <a href="https://rs.school/courses/javascript-preschool-ru"  target="_blank" >
 			  
-			  <img src="rss-logo.svg" alt="logo">
+			  <img class="footer-img" src="rss-logo.svg" alt="logo">
 		</a>
 		  
 	</footer>
