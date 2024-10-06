@@ -8,19 +8,11 @@ const CARD_FLIP_TIMEOUT_MS = 500;
 const CARD_ELEMENTS = ["🍇", "🍒", "🥭", "🍍", "🍉", "🥝"];
 const MODAL = document.querySelector(".modal-overlay");
 const MODAL_WRAPPER = document.querySelector(".modal-wrapper");
-const RESULTS_LIST = document.querySelector(".results");
 
 const CARD_AMOUNT = 12;
 let VISIBLE_CARDS = [];
 let step = 0;
-let WINNERS = [
-  {
-    movies: 10,
-  },
-  {
-    movies: 14,
-  },
-];
+let WINNERS = [];
 START_GAME_BTN.addEventListener("click", startGame);
 
 function startGame() {
@@ -120,11 +112,9 @@ function handleCardClick(card) {
 }
 
 function addWinners() {
-  if (WINNERS.length < 3) {
-    WINNERS.push({ movies: step });
-  } else {
-  }
+  WINNERS.push({ movies: step });
   WINNERS = WINNERS.sort((a, b) => console.log(a.movies));
+  WINNERS = WINNERS.slice(0, 10);
   return WINNERS;
 }
 
@@ -162,7 +152,8 @@ RESULTS.addEventListener("click", openResults);
 function closeResults(event) {
   if (
     event.target.classList.contains("modal-overlay") ||
-    event.target.classList.contains("close-svg")
+    event.target.classList.contains("close-svg") ||
+    event.target.tagName === "path"
   ) {
     MODAL.classList.add("hide");
   }

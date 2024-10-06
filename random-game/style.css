@@ -107,6 +107,10 @@ h1 {
 h2 {
   margin-top: 10px;
   font-size: 2rem;
+  margin-bottom: 30px;
+}
+h3 {
+  font-size: 1.3rem;
 }
 header,
 main,
