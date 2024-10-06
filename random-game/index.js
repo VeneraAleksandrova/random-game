@@ -12,9 +12,9 @@ const MODAL_WRAPPER = document.querySelector(".modal-wrapper");
 const CARD_AMOUNT = 12;
 let VISIBLE_CARDS = [];
 let step = 0;
-let WINNERS = [];
-START_GAME_BTN.addEventListener("click", startGame);
+let WINNERS = JSON.parse(localStorage.getItem("winners")) || [];
 
+START_GAME_BTN.addEventListener("click", startGame);
 function startGame() {
   checkSteps(true);
   [GAME_NODE, VICTORY_TEXT].forEach((element) => (element.textContent = ""));
@@ -157,4 +157,16 @@ function closeResults(event) {
   ) {
     MODAL.classList.add("hide");
   }
+}
+
+window.addEventListener("beforeunload", setLocalStorage);
+//window.addEventListener("load", getLocalStorage);
+
+function setLocalStorage() {
+  localStorage.setItem("winners", JSON.stringify(WINNERS));
+}
+
+function getLocalStorage() {
+  WINNERS = JSON.parse(localStorage.getItem("winners"));
+  //localStorage.clear();
 }
