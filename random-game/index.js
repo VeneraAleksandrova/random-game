@@ -113,7 +113,7 @@ function handleCardClick(card) {
 
 function addWinners() {
   WINNERS.push({ movies: step });
-  WINNERS = WINNERS.sort((a, b) => console.log(a.movies));
+  WINNERS = WINNERS.sort((a, b) => a.movies - b.movies);
   WINNERS = WINNERS.slice(0, 10);
   return WINNERS;
 }
