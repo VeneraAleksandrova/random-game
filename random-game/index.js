@@ -160,13 +160,7 @@ function closeResults(event) {
 }
 
 window.addEventListener("beforeunload", setLocalStorage);
-//window.addEventListener("load", getLocalStorage);
 
 function setLocalStorage() {
   localStorage.setItem("winners", JSON.stringify(WINNERS));
-}
-
-function getLocalStorage() {
-  WINNERS = JSON.parse(localStorage.getItem("winners"));
-  //localStorage.clear();
 }
