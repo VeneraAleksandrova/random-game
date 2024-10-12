@@ -128,7 +128,20 @@ header {
 main {
   flex-grow: 1;
 }
-
+.parameters {
+  display: flex;
+  justify-content: space-between;
+}
+#m,
+#s {
+  display: inline-block;
+  width: 23px;
+  text-align: center;
+}
+#timedate {
+  color: rgb(33, 56, 16);
+  text-align: center;
+}
 footer {
   display: flex;
   justify-content: center;
@@ -172,6 +185,7 @@ footer svg {
   display: flex;
   font-family: "Fascinate Inline", system-ui;
   padding: 5px 10px;
+  font-size: 1.7rem;
   border-radius: 10px;
   background-color: rgb(72, 121, 37);
   color: #e4e4e5;
