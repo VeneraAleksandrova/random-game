@@ -8,20 +8,30 @@ const CARD_FLIP_TIMEOUT_MS = 500;
 const CARD_ELEMENTS = ["🍇", "🍒", "🥭", "🍍", "🍉", "🥝"];
 const MODAL = document.querySelector(".modal-overlay");
 const MODAL_WRAPPER = document.querySelector(".modal-wrapper");
-
+const PLAY_GAME = document.querySelector("#play-game-btn");
+const START_PAGE = document.querySelector(".play-game");
 const CARD_AMOUNT = 12;
 let VISIBLE_CARDS = [];
 let period = 0;
-let startTime;
 let step = 0;
+let timerId;
 //localStorage.clear();
 let WINNERS = JSON.parse(localStorage.getItem("winners")) || [];
 
+PLAY_GAME.addEventListener("click", playGame);
 START_GAME_BTN.addEventListener("click", startGame);
+
+function playGame() {
+  START_PAGE.classList.add("hide");
+  startGame();
+}
+
 function startGame() {
+  clearTimeout(timerId);
+  updateTimeOnHTML("00", "00");
+  period = 0;
   checkSteps(true);
-  startTime = new Date();
-  setTimeout(checkTime(), 1000);
+  timerId = setTimeout(checkTime, 1000);
   [GAME_NODE, VICTORY_TEXT].forEach((element) => (element.textContent = ""));
   const CARD_VALUES = generateArray(CARD_ELEMENTS, CARD_AMOUNT);
   CARD_VALUES.forEach((element) => renderCard(element));
@@ -29,20 +39,31 @@ function startGame() {
 
 function checkTime() {
   if (VICTORY_TEXT.textContent != "") {
-    clearTimeout();
+    clearTimeout(timerId);
+  } else if (!MODAL.classList.contains("hide")) {
+    clearInterval(timerId);
   } else {
-    let now = new Date();
-    let seconds, minutes;
-    period = now.getTime() - startTime.getTime();
-    setTimeout(checkTime, 1000, 1000 + period);
-    seconds = Math.floor(period / 1000);
-    minutes = Math.floor(seconds / 60);
-    minutes %= 60;
-    seconds %= 60;
-    document.getElementById("m").innerHTML = ("0" + minutes).slice(-2);
-    document.getElementById("s").innerHTML = ("0" + seconds).slice(-2);
+    period += 1000;
+    timerId = setTimeout(checkTime, 1000, 1000 + period);
+    const time = changeFormatTime(period);
+    updateTimeOnHTML(time.split(":")[0], time.split(":")[1]);
   }
 }
+
+function changeFormatTime(time) {
+  let s, m;
+  s = Math.floor(time / 1000);
+  m = Math.floor(s / 60);
+  s %= 60;
+  m %= 60;
+  return `${m.toString().length == 1 ? "0" + m : m}:${("0" + s).slice(-2)}`;
+}
+
+function updateTimeOnHTML(m, s) {
+  document.getElementById("m").innerHTML = m;
+  document.getElementById("s").innerHTML = s;
+}
+
 function generateArray(emojies, cardAmount) {
   const randomArray = [];
   const elementCount = {};
@@ -148,14 +169,13 @@ function addWinners() {
     }
     return -1;
   });
-  WINNERS = WINNERS.length > 10 ? WINNERS.slice(0, 10) : WINNERS;
+  WINNERS = WINNERS.length > 4 ? WINNERS.slice(0, 4) : WINNERS;
 }
 
 startGame();
 
 function renderResults() {
   MODAL.classList.remove("hide");
-  MODAL_WRAPPER.innerHTML = "";
   const close = document.createElement("div");
   close.classList.add("close");
   close.innerHTML = `<svg class="close-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="50px" height="50px" fill-rule="nonzero"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M7.71875,6.28125l-1.4375,1.4375l17.28125,17.28125l-17.28125,17.28125l1.4375,1.4375l17.28125,-17.28125l17.28125,17.28125l1.4375,-1.4375l-17.28125,-17.28125l17.28125,-17.28125l-1.4375,-1.4375l-17.28125,17.28125z"></path></g></g></svg>`;
@@ -187,15 +207,6 @@ function renderResults() {
   MODAL.addEventListener("click", closeResults);
 }
 
-function changeFormatTime(time) {
-  let s, m;
-  s = Math.floor(time / 1000);
-  m = Math.floor(s / 60);
-  s %= 60;
-  m %= 60;
-  return `${("0" + m).slice(-2)}:${("0" + s).slice(-2)}`;
-}
-
 RESULTS.addEventListener("click", renderResults);
 
 function closeResults(event) {
@@ -205,6 +216,8 @@ function closeResults(event) {
     event.target.tagName === "path"
   ) {
     MODAL.classList.add("hide");
+    MODAL_WRAPPER.innerHTML = "";
+    timerId = setTimeout(checkTime, 1000);
   }
 }
 
